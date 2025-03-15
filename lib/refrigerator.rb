@@ -55,5 +55,4 @@ class Refrigerator
     Water: Reservoir has #{water_reservoir.current_water_volume} remaining.
     STATUS
   end
-
 end
