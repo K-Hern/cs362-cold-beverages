@@ -95,8 +95,16 @@ describe 'Freezer:' do
   end
 
   describe "#set_level" do
-    it "sets the temperature to some degree lower than ROOM_TEMPERATURE" do
-      skip
+    it "sets the temperature to a given level" do
+      start_temp = freezer.temperature
+      freezer.set_level(6)
+      expect(freezer.temperature).to be(10)
+    end
+
+    it "doesn't change the temp given a 0 level" do
+      start_temp = freezer.temperature
+      freezer.set_level(0)
+      expect(freezer.temperature).to eq(start_temp)
     end
   end
 end
