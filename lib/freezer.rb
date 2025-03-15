@@ -28,7 +28,7 @@ class Freezer
   end
 
   def set_level(level)
-    @temperature = ROOM_TEMPERATURE - level * 10
+    @temperature = ROOM_TEMPERATURE - (level * 10)
   end
 
 end
