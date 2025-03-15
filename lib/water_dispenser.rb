@@ -8,6 +8,6 @@ class WaterDispenser
 
   def dispense(vessel)
     reservoir.drain(vessel.volume)
+    reservoir.fill
   end
-
 end

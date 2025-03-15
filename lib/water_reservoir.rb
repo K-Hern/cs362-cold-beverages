@@ -17,7 +17,9 @@ class WaterReservoir
   end
 
   def drain(volume)
-    self.current_water_volume -= volume
+    # if the dispense volume is greater than available abort
+    if (current_water_volume > volume)
+      self.current_water_volume -= volume
+    end
   end
-
 end
