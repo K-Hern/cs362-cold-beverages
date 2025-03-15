@@ -3,6 +3,7 @@ require_relative '../lib/freezer'
 require_relative '../lib/chiller'
 require_relative '../lib/water_reservoir'
 require_relative '../lib/water_dispenser'
+require_relative '../lib/item'
 
 describe 'Refrigerator:' do
   let(:freezer) { Freezer.new() }
@@ -23,14 +24,14 @@ describe 'Refrigerator:' do
 
   describe "#chill" do
     it "adds the given item to the chiller's contents" do
-      fridge.chill("An Item")
+      fridge.chill(Item.new("Banana", 10))
       expect((fridge.chiller.instance_variable_get(:@contents)).length).to eq(1)
     end
   end
 
   describe "#freeze" do
     it "adds the given item to the freezer's contents" do
-      fridge.freeze("An Item")
+      fridge.freeze(Item.new("Banana", 10))
       expect((fridge.freezer.instance_variable_get(:@contents)).length).to eq(1)
     end
   end
