@@ -1,3 +1,4 @@
+# CS 362 | Winter 2025 | Kevin Hernández
 # Exam: A Refrigerator Simulator
 
 This is a learning situation, to demonstrate your capabilities regarding
