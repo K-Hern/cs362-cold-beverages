@@ -85,7 +85,7 @@ describe 'Chiller:' do
       expect(chiller.remaining_capacity).to eq(chiller.capacity - 14)
     end
 
-    it "raises an error when items added to the contents do not have a capacity" do
+    it "raises an error when items added to the contents do not have a volume" do
       itemFake = 10
       chiller.add(itemFake)
       chiller.add(itemFake)
@@ -96,9 +96,9 @@ describe 'Chiller:' do
 
   describe "#set_level" do
     it "sets the temperature to a given level" do
-      start_temp = chiller.temperature
-      chiller.set_level(6)
-      expect(chiller.temperature).to be(40)
+      level = 6
+      chiller.set_level(level)
+      expect(chiller.temperature).to be(Chiller::ROOM_TEMPERATURE - (level * 5))
     end
 
     it "doesn't change the temp given a 0 level" do

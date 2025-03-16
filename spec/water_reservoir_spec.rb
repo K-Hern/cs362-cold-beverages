@@ -60,9 +60,9 @@ describe 'A Water Reservoir:' do
     end
 
     it "does not drain when the given amount is more than available" do
-      wr.current_water_volume = 10
+      wr.current_water_volume = 7
       wr.drain(20)
-      expect(wr.current_water_volume = 10)
+      expect(wr.current_water_volume = 7)
     end
 
     it "drains when the given amount is equal to the available" do

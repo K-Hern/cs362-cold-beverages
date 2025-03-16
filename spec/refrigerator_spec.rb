@@ -3,7 +3,6 @@ require_relative '../lib/freezer'
 require_relative '../lib/chiller'
 require_relative '../lib/water_reservoir'
 require_relative '../lib/water_dispenser'
-require_relative '../lib/item'
 
 describe 'Refrigerator:' do
   let(:freezer) { Freezer.new() }
@@ -14,30 +13,44 @@ describe 'Refrigerator:' do
 
   describe "#Initialize" do
     it "Allows an instance to be created" do
-      expect{Refrigerator.new("chiller", "freezer", "water Dispenser", "Water Reservoir")}.not_to raise_error
+      expect { Refrigerator.new(chiller, freezer, water_dispenser, water_reservoir)}.not_to raise_error
+    end
+
+    it "Requires the chiller, freezer, water_dispenser, water_reservoir args to create" do
+      expect {Refrigerator.new()}.to raise_error(ArgumentError)
     end
 
     it "sets the power to be off" do
       expect(fridge.instance_variable_get(:@power)).to eq(:off)
     end
+
+    it "has public chiller, freezer, control_panel, water_dispenser, and water_reservoir fields" do
+      expect(fridge).to respond_to(:chiller)
+      expect(fridge).to respond_to(:freezer)
+      expect(fridge).to respond_to(:control_panel)
+      expect(fridge).to respond_to(:water_dispenser)
+      expect(fridge).to respond_to(:water_reservoir)
+    end
   end
 
   describe "#chill" do
     it "adds the given item to the chiller's contents" do
-      fridge.chill(Item.new("Banana", 10))
-      expect((fridge.chiller.instance_variable_get(:@contents)).length).to eq(1)
+      fakeItem = double("Banana Item")
+      fridge.chill(fakeItem)
+      expect(chiller.instance_variable_get(:@contents).length).to eq(1)
     end
   end
 
   describe "#freeze" do
     it "adds the given item to the freezer's contents" do
-      fridge.freeze(Item.new("Banana", 10))
-      expect((fridge.freezer.instance_variable_get(:@contents)).length).to eq(1)
+      fakeItem = double("Banana Item")
+      fridge.freeze(double(fakeItem))
+      expect(freezer.instance_variable_get(:@contents).length).to eq(1)
     end
   end
 
   describe "#total_capacity" do
-    it "returns the total capacity of fridge components" do
+    it "returns the total capacity of all fridge components" do
       expect(fridge.total_capacity).to eq(freezer.capacity + chiller.capacity)
     end
   end
@@ -68,15 +81,17 @@ describe 'Refrigerator:' do
 
   describe "#set_chiller_level" do
     it "sets the level of the chiller to the specified" do
-      fridge.set_chiller_level(6)
-      expect(chiller.temperature).to eq(40)
+      level = 6
+      fridge.set_chiller_level(level)
+      expect(chiller.temperature).to eq(Chiller::ROOM_TEMPERATURE - (level * 5))
     end
   end
 
   describe "#set_freezer_level" do
     it "sets the level of the freezer to the specified" do
-      fridge.set_freezer_level(6)
-      expect(freezer.temperature).to eq(10)
+      level = 6
+      fridge.set_freezer_level(level)
+      expect(freezer.temperature).to eq(Freezer::ROOM_TEMPERATURE - (level * 10))
     end
   end
 

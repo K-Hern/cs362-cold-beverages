@@ -12,7 +12,7 @@ describe 'A water dispenser' do
       expect { WaterDispenser.new(double('FakeReservoir')) }.to_not raise_error
     end
 
-    it "has a reservoir field" do
+    it "has a public reservoir field" do
       expect(WaterDispenser.new(double('FakeReservoir'))).to respond_to(:reservoir)
     end
   end
@@ -21,7 +21,7 @@ describe 'A water dispenser' do
     let(:wr) {WaterReservoir.new()}
     let(:wd) {WaterDispenser.new(wr)}
 
-    it "does not allows the dispensing of more than available" do
+    it "does not allow the dispensing of more than available" do
       wd.dispense(double('fakeVessel', volume: 11))
       expect(wr.current_water_volume).to eq(10)
     end
